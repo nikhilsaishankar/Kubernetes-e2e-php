@@ -24,14 +24,14 @@ spec:
 
           resources:
             requests:
-              cpu: "100"
+              cpu: "100m"
               memory: "128Mi"
             limits:
               cpu: "200m"
               memory: "256Mi"
 
           livenessProbe:
-            httpGet:
+            httpsGet:
               path: /
               port: 80
             initialDelaySeconds: 30
