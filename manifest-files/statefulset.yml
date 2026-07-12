@@ -34,7 +34,7 @@ spec:
 
           volumeMounts:
             - name: pvc-1
-              mouthPath: /usr/share/nginx/html/
+              mountPath: /usr/share/nginx/html/
 
 
       volumeClaimTemplates:
