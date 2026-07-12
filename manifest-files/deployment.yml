@@ -4,7 +4,7 @@ metadata:
   name: mydeploy
 spec:
   replicas: 2
-  selectors:
+  selector:
     matchLabels: 
         app: dev
   template:
