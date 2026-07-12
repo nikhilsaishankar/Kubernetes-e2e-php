@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: mysql
 spec:
+  serviceName: mysqldb
   replicas: 1
   selectors:
     matchLabels: 
