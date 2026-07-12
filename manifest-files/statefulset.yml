@@ -24,7 +24,7 @@ spec:
                - name: mysec
 
           resources:
-            request:
+            requests:
               cpu: "100"
               memory: "128Mi"
             limits:
