@@ -6,8 +6,8 @@ spec:
   serviceName: mysqldb
   replicas: 1
   selector:
-    matchLabels: 
-        app: dbdev
+    matchLabels:
+      app: dbdev
   template:
     metadata:
       labels:
@@ -18,11 +18,9 @@ spec:
           image: nikhilkotharu/k8s:dbimage
           ports:
             - containerPort: 3306
-    
           envFrom:
             - secretRef:
                 name: mysec
-
           resources:
             requests:
               cpu: "100m"
@@ -30,21 +28,16 @@ spec:
             limits:
               cpu: "200m"
               memory: "256Mi"
-          
-
           volumeMounts:
             - name: pvc-1
               mountPath: /usr/share/nginx/html/
-
-
-      volumeClaimTemplates:
-          - metadata:
-              name: pvc-1
-            spec:
-              accessModes:
-               - ReadWriteOnce
-              storageClassName: gp2
-               
-              resources:
-                requests:
-                  storage: 2Gi
+  volumeClaimTemplates:        
+    - metadata:
+        name: pvc-1
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        storageClassName: gp2
+        resources:
+          requests:
+            storage: 2Gi
