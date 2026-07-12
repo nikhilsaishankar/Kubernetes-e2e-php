@@ -12,7 +12,7 @@ spec:
       labels:
         app: dev
     spec:
-      container:
+      containers:
         - name: cont01
           image: nikhilkotharu/k8s:appimage
           port:
