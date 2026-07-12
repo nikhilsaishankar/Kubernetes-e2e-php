@@ -5,7 +5,7 @@ metadata:
 spec:
   serviceName: mysqldb
   replicas: 1
-  selectors:
+  selector:
     matchLabels: 
         app: dbdev
   template:
@@ -13,13 +13,13 @@ spec:
       labels:
         app: dbdev
     spec:
-      container:
+      containers:
         - name: dbcont01
           image: nikhilkotharu/k8s:dbimage
-          port:
-            - containerport: 3306
+          ports:
+            - containerPort: 3306
     
-          envfrom:
+          envFrom:
             secretRef:
                - name: mysec
 
@@ -34,7 +34,7 @@ spec:
 
           volumeMounts:
             - name: pvc-1
-              mouthPath: /var/lib/mysql
+              mouthPath: /usr/share/nginx/html/
 
 
       volumeClaimTemplates:
