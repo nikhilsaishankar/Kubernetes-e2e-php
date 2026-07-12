@@ -23,7 +23,7 @@ spec:
                - name: mycmap
 
           resources:
-            request:
+            requests:
               cpu: "100"
               memory: "128Mi"
             limits:
