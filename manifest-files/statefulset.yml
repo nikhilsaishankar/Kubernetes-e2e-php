@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  selectors:
+    matchLabels: 
+        app: dbdev
+  template:
+    metadata:
+      labels:
+        app: dbdev
+    spec:
+      container:
+        - name: dbcont01
+          image: nikhilkotharu/k8s:dbimage
+          port:
+            - containerport: 3306
+    
+          envfrom:
+            secretRef:
+               - name: mysec
+
+          resources:
+            request:
+              cpu: "100"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+          
+
+          volumeMounts:
+            - name: pvc-1
+              mouthPath: /var/lib/mysql
+
+
+      volumeClaimTemplates:
+          - metadata:
+              name: pvc-1
+            spec:
+              accessModes:
+               - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 2Gi

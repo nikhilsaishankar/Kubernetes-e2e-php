@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysqldb
+spec:
+  ClusterIP: None
+  selector:
+    app : dbdev
+  ports:
+    - port: 3306
+      targetport: 3306

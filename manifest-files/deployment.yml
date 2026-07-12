@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: mydeploy
+spec:
+  replicas: 2
+  selectors:
+    matchLabels: 
+        app: dev
+  template:
+    metadata:
+      labels:
+        app: dev
+    spec:
+      container:
+        - name: cont01
+          image: nikhilkotharu/k8s:appimage
+          port:
+            - containerport: 80
+    
+          envfrom:
+            configMapRef:
+               - name: mycmap
+
+          resources:
+            request:
+              cpu: "100"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            periodSeconds: 5
+
+          readinessProbe:
+            httpsGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+
+          
