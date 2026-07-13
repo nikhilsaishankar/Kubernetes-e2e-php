@@ -4,7 +4,7 @@ metadata:
   name: mydeploy
 spec:
   replicas: 2
-  selectors:
+  selector:
     matchLabels: 
         app: dev
   template:
@@ -12,19 +12,19 @@ spec:
       labels:
         app: dev
     spec:
-      container:
+      containers:
         - name: cont01
           image: nikhilkotharu/k8s:appimage
-          port:
-            - containerport: 80
+          ports:
+            - containerPort: 80
     
           envfrom:
-            configMapRef:
-               - name: mycmap
+            - configMapRef:
+               name: mycmap
 
           resources:
-            request:
-              cpu: "100"
+            requests:
+              cpu: "100m"
               memory: "128Mi"
             limits:
               cpu: "200m"
@@ -38,7 +38,7 @@ spec:
             periodSeconds: 5
 
           readinessProbe:
-            httpsGet:
+            httpGet:
               path: /
               port: 80
             initialDelaySeconds: 10
