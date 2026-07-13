@@ -48,6 +48,7 @@ HPA, PDB, Ingress, and NetworkPolicy.
  │                                                                        │
  └────────────────────────────────────────────────────────────────────────┘
                                      │
+                                     │  docker push (scanned images)
                                      ▼
                       ┌─────────────────────────────┐
                       │         DOCKER HUB          │
@@ -55,11 +56,20 @@ HPA, PDB, Ingress, and NetworkPolicy.
                       │ nikhilkotharu/k8s:dbimage   │
                       └─────────────────────────────┘
                                      │
-                                     │  ArgoCD pulls scanned images
+                                     │  commit the new image tag to Git
+                                     ▼
+                      ┌─────────────────────────────┐
+                      │        GITHUB · main        │
+                      │  manifest-files/ updated    │
+                      │  with the latest image tag  │
+                      └─────────────────────────────┘
+                                     │
+                                     │  ArgoCD watches main
                                      ▼
  ┌──[ 3 · CD — ARGOCD (GITOPS) ]──────────────────────────────────────────┐
  │                                                                        │
- │ GitHub main (manifest-files/) ──sync──► ArgoCD ──apply──► cluster      │
+ │ new commit detected ──► sync ──► manifests applied to the cluster      │
+ │ cluster nodes pull the tagged image from Docker Hub                    │
  │ Git is the source of truth · drift auto-heal · rollback = revert       │
  │                                                                        │
  └────────────────────────────────────────────────────────────────────────┘
