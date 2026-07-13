@@ -46,29 +46,22 @@ HPA, PDB, Ingress, and NetworkPolicy.
  │                                                                        │
  │ SonarQube CQA + blocking Quality Gate · Trivy vulnerability gate       │
  │                                                                        │
+ │          docker push (scanned)          git commit (new tag)           │
+ │                    │                              │                    │
+ │                    ▼                              ▼                    │
+ │      ┌─────────────────────────────┐  ┌─────────────────────────────┐  │
+ │      │      DOCKER HUB / ECR       │  │        GITHUB · main        │  │
+ │      │ nikhilkotharu/k8s:appimage  │  │  manifest-files/ updated    │  │
+ │      │ nikhilkotharu/k8s:dbimage   │  │  with the latest image tag  │  │
+ │      └─────────────────────────────┘  └─────────────────────────────┘  │
+ │                                                                        │
  └────────────────────────────────────────────────────────────────────────┘
-                                     │
-                                     │  docker push (scanned images)
-                                     ▼
-                      ┌─────────────────────────────┐
-                      │         DOCKER HUB          │
-                      │ nikhilkotharu/k8s:appimage  │
-                      │ nikhilkotharu/k8s:dbimage   │
-                      └─────────────────────────────┘
-                                     │
-                                     │  commit the new image tag to Git
-                                     ▼
-                      ┌─────────────────────────────┐
-                      │        GITHUB · main        │
-                      │  manifest-files/ updated    │
-                      │  with the latest image tag  │
-                      └─────────────────────────────┘
                                      │
                                      │  ArgoCD watches main
                                      ▼
  ┌──[ 3 · CD — ARGOCD (GITOPS) ]──────────────────────────────────────────┐
  │                                                                        │
- │ new commit detected ──► sync ──► manifests applied to the cluster      │
+ │ new commit on main detected ──► sync ──► manifests applied to EKS      │
  │ cluster nodes pull the tagged image from Docker Hub                    │
  │ Git is the source of truth · drift auto-heal · rollback = revert       │
  │                                                                        │
