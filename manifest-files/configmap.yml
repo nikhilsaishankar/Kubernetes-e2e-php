@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: mycmap
 data:
-  DB_HOST: mysql
+  DB_HOST: mysqldb
   DB_PORT: "3306"
