@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: mysqldb
 spec:
-  ClusterIP: None
+  clusterIP: None
   selector:
     app : dbdev
   ports:
     - port: 3306
-      targetport: 3306
+      targetPort: 3306
