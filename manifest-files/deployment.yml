@@ -18,7 +18,7 @@ spec:
           ports:
             - containerPort: 80
     
-          envfrom:
+          envFrom:
             - configMapRef:
                name: mycmap
 
